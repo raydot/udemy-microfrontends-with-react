@@ -6,6 +6,7 @@ module.exports = {
   devServer: {
     port: 8080,
   },
+  devtool: 'eval-source-map',
   plugins: [
     new ModuleFederationPlugin({
       name: 'container', // name of host module
