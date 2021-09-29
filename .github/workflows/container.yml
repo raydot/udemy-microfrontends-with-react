@@ -5,11 +5,11 @@ on:
     branches:
       - main
     paths:
-      - 'packages/container/**'
+      - 'section-04/container/**'
 
 defaults:
   run:
-    working-directory: packages/container
+    working-directory: section-04/container
 
 jobs:
   build:
