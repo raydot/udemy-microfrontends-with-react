@@ -1,6 +1,8 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 // import { mount } from 'marketing/MarketingApp';
 import MarketingApp from './components/MarketingApp';
+import Header from './components/Header';
 
 // console.log(mount);
 /*
@@ -13,11 +15,14 @@ import MarketingApp from './components/MarketingApp';
 
 export default () => {
   return (
-    <div>
-      <h1>Hello from container!</h1>
-      <hr />
-      <MarketingApp />
-    </div>
+    <BrowserRouter>
+      <div>
+        {/*<h1>Hello from container!</h1>
+      <hr />*/}
+        <Header />
+        <MarketingApp />
+      </div>
+    </BrowserRouter>
   );
 };
 
