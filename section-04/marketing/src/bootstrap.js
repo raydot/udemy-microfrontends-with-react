@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-// Mount functiuon to start the app
+// Mount function to start the app
+// This looks basic, but it's actually super important as it allows container to
+// simply call "mount", and not have to worry about what the actual marketing
+// app technology stack is.
 const mount = (el) => {
   //   ReactDOM.render(<h1>Hello from Marketing</h1>, el);
   ReactDOM.render(<App />, el);
