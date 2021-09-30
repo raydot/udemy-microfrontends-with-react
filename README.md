@@ -16,4 +16,6 @@ The second project in the course. A not-so-generic microfrontend with simulated 
 - Version control (monorepo v. separate) shouldn't have any impact on the overall project
 - Container should be able to decide to always use the latest version of a microfrontend **or** specify a specific version
 
-Based on all of these requirements, we also have to set up a GIT monorepo, and deploy to Amazon S3 and Cloudfront using CI/CD.
+Based on all of these requirements, we also have to set up a GIT monorepo, and deploy to Amazon S3 and Cloudfront using Git Actions for CI/CD -- pretty cool! The app also covers CSS library coverage, navigation, and other small goodies.
+
+A great course overall. Be sure to look in the Q&A if you can't get something working. There were a couple of bugs that weren't covered in the videos.
