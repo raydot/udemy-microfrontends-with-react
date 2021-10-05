@@ -9,12 +9,14 @@ import App from './App';
 // app technology stack is.
 
 // onNavigate is a navigation callback set up on container/components/MarketingApp.js
-const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
+const mount = (el, { onSignIn, onNavigate, defaultHistory, initialPath }) => {
   //   ReactDOM.render(<h1>Hello from Marketing</h1>, el);
   // Create our own memory history for use in sub-applications
   const history =
     defaultHistory ||
     createMemoryHistory({
+      // Have to set an initial path, because otherwise the app thinks we're at '/'
+      // and doesn't load anything.
       initialEntries: [initialPath],
     });
 
@@ -22,7 +24,7 @@ const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
     history.listen(onNavigate);
   }
 
-  ReactDOM.render(<App history={history} />, el);
+  ReactDOM.render(<App onSignIn={onSignIn} history={history} />, el);
 
   // Give us a handle on the marketing app
   return {
@@ -41,7 +43,7 @@ const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
 
 // If in dev and isolation, call mount immediately
 if (process.env.NODE_ENV === 'development') {
-  const devRoot = document.querySelector('#_marketing-dev-root');
+  const devRoot = document.querySelector('#_auth-dev-root');
 
   if (devRoot) {
     mount(devRoot, { defaultHistory: createBrowserHistory() });

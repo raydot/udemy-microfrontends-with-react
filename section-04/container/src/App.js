@@ -1,12 +1,19 @@
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import React, { lazy, Suspense, useState } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import {
   StylesProvider,
   createGenerateClassName,
 } from '@material-ui/core/styles';
 
-import MarketingApp from './components/MarketingApp';
+// import MarketingApp from './components/MarketingApp';
+// import AuthApp from './components/AuthApp';
+import Progress from './components/Progress';
 import Header from './components/Header';
+
+// Get the imports working with lazy and Suspense so they only load
+// as needed
+const MarketingLazy = lazy(() => import('./components/MarketingApp'));
+const AuthLazy = lazy(() => import('./components/AuthApp.js'));
 
 // Leftover code that illustrates "the big idea"
 // import { mount } from 'marketing/MarketingApp';
@@ -25,14 +32,30 @@ const generateClassName = createGenerateClassName({
 });
 
 export default () => {
+  const [isSignedIn, setIsSignedIn] = useState(false);
   return (
     <BrowserRouter>
       <StylesProvider generateClassName={generateClassName}>
         <div>
           {/*<h1>Hello from container!</h1>
       <hr />*/}
-          <Header />
-          <MarketingApp />
+          <Header
+            onSignOut={() => setIsSignedIn(false)}
+            isSignedIn={isSignedIn}
+          />
+          {/*<Suspense fallback={<div>Loading...</div>}>*/}
+          <Suspense fallback={<Progress />}>
+            <Switch>
+              {/*<Route path='/auth' component={AuthApp} />
+    <Route path='/' component={MarketingApp} />*/}
+              {/*  <Route path='/auth' component={AuthLazy} />*/}
+
+              <Route path='/auth'>
+                <AuthLazy onSignIn={() => setIsSignedIn(true)} />
+              </Route>
+              <Route path='/' component={MarketingLazy} />
+            </Switch>
+          </Suspense>
         </div>
       </StylesProvider>
     </BrowserRouter>

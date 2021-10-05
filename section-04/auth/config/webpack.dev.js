@@ -6,21 +6,26 @@ const packageJson = require('../package.json'); // let's get some stuff right fr
 
 const devConfig = {
   mode: 'development',
+  // This is covered extensively in section 95: problem is that
+  // because "auth" comes from a sub-path (port/auth/main.js) webpack
+  // won't know where to find it if it's not explicitly set.
+  // While it doesn't matter to marketing or dashboard because we're not
+  // using subpaths in them (yet) we will configure for those as well.
   output: {
-    publicPath: 'http://localhost:8081/',
+    publicPath: 'http://localhost:8082/',
   },
   devServer: {
-    port: 8081,
+    port: 8082,
     historyApiFallback: {
       index: '/index.html',
     },
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'marketing',
+      name: 'auth',
       filename: 'remoteEntry.js',
       exposes: {
-        './MarketingApp': './src/bootstrap',
+        './AuthApp': './src/bootstrap',
       },
       // Dependencies we want to share so they don't get loaded multiple times
       //shared: ['react', 'react-dom'],

@@ -10,6 +10,8 @@ export default () => {
   useEffect(() => {
     // We're now able to access this function in the Marketing app:
     const { onParentNavigate } = mount(ref.current, {
+      // Set inital path so app doesn't think it's '/'
+      initialPath: history.location.pathname,
       // Pathname lives in the listener
       // This is all to send navigation FROM marketing TO container
       // It works with the history object in Marketing's App.js
