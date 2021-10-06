@@ -21,6 +21,7 @@ const devConfig = {
         // matches whats in marketing webpack.dev.js
         marketing: 'marketing@http://localhost:8081/remoteEntry.js',
         auth: 'auth@http://localhost:8082/remoteEntry.js',
+        dashboard: 'dashboard@http://localhost:8083/remoteEntry.js',
       },
       //shared: ['react', 'react-dom'],
       // better still, grab the list right from dependencies!

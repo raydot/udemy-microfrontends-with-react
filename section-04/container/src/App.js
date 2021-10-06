@@ -1,9 +1,10 @@
-import React, { lazy, Suspense, useState } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import {
   StylesProvider,
   createGenerateClassName,
 } from '@material-ui/core/styles';
+import { createBrowserHistory } from 'history';
 
 // import MarketingApp from './components/MarketingApp';
 // import AuthApp from './components/AuthApp';
@@ -13,8 +14,8 @@ import Header from './components/Header';
 // Get the imports working with lazy and Suspense so they only load
 // as needed
 const MarketingLazy = lazy(() => import('./components/MarketingApp'));
-const AuthLazy = lazy(() => import('./components/AuthApp.js'));
-
+const AuthLazy = lazy(() => import('./components/AuthApp'));
+const DashboardLazy = lazy(() => import('./components/DashboardApp'));
 // Leftover code that illustrates "the big idea"
 // import { mount } from 'marketing/MarketingApp';
 // console.log(mount);
@@ -31,10 +32,22 @@ const generateClassName = createGenerateClassName({
   productionPrefix: 'co',
 });
 
+// Using this instead of browserrouter
+// Mostly because of the challenge in trying to get the history
+// from <BrowserRouter>, as opposed to <Router>
+const history = createBrowserHistory();
+
 export default () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    if (isSignedIn) {
+      history.push('/dashboard');
+    }
+  }, [isSignedIn]);
+
   return (
-    <BrowserRouter>
+    <Router history={history}>
       <StylesProvider generateClassName={generateClassName}>
         <div>
           {/*<h1>Hello from container!</h1>
@@ -53,12 +66,20 @@ export default () => {
               <Route path='/auth'>
                 <AuthLazy onSignIn={() => setIsSignedIn(true)} />
               </Route>
+              {/*<Route path='/dashboard' component={DashboardLazy} />
+                refactor to handle redirect based on signin state
+              */}
+              <Route path='/dashboard'>
+                {!isSignedIn && <Redirect to='/' />}
+                <DashboardLazy />
+              </Route>
+
               <Route path='/' component={MarketingLazy} />
             </Switch>
           </Suspense>
         </div>
       </StylesProvider>
-    </BrowserRouter>
+    </Router>
   );
 };
 
