@@ -14,7 +14,7 @@ const prodConfig = {
       name: 'dashboard',
       filename: 'remoteEntry.js', // will contain a list of urls
       exposes: {
-        './dashboardApp': './src/bootstrap',
+        './DashboardApp': './src/bootstrap',
       },
       shared: packageJson.dependencies,
     }),
